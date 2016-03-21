@@ -7,7 +7,7 @@ before_install:
   - pandoc -v
 
 script:
-  - git clone git@github.com:district10/hacking-travis.git
+  - git clone https://github.com/district10/hacking-travis.git
   - wget http://devtools.qiniu.com/qiniu-devtools-linux_amd64-current.tar.gz
   - tar xfz qiniu-devtools-linux_amd64-current.tar.gz
   - cd hacking-travis

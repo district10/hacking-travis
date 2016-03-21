@@ -1,4 +1,7 @@
 # hacking-travis
+
+[![Build Status](https://travis-ci.org/district10/hacking-travis.svg?branch=master)](https://travis-ci.org/district10/hacking-travis)
+
 Try some travis
 
 ```bash
