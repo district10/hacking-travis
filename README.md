@@ -25,6 +25,9 @@ Hacking Travis
 
 里面的 `QiNiuAK`，`QiNiuSK` 后面会被自动提换成自己的真实 key 值。
 
+其次，用 GitHub 登录 <https://travis-ci.org>，把自己的 repo 设置为需要 travis 处理。
+然后在 GitHub 里加上一个 `.travis.yml` 文件，放入下面的内容：
+
 ```yml
 sudo: required
 
@@ -61,6 +64,8 @@ pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css \
         -f markdown+east_asian_line_breaks README.md \
         -o publish/index.html
 ```
+
+然后到 trivis 去设置那两个环境变量。然后 push 到 GitHub 就可以了。
 
 ---
 
