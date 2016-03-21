@@ -5,13 +5,13 @@
 Hacking Travis
 ==============
 
-<div class="tzx-fright">
-
 [![Build Status](https://travis-ci.org/district10/hacking-travis.svg?branch=master)](https://travis-ci.org/district10/hacking-travis)
 
-</div>
+这是 pandoc 格式的 Markdown，GitHub 上显示得可能不好，请到
+<http://whudoc.qiniudn.com/travis/index.html> 查看效果。
 
-**这个 repo 展示了如何用 travis 自动把本文件用 pandoc 转换，然后上载到自己的七牛云盘中。**
+**这个 [repo](https://github.com/district10/hacking-travis) 展示了如何用 travis
+自动把本文件用 pandoc 转换，然后上载到自己的七牛云盘中。**
 
 首先新建一个 `conf.json`:
 
@@ -53,7 +53,7 @@ script:
   - 同步到七牛，所以下载 `qiniu-devtools-linux_amd64-amd64-current.tar.gz`，里
     面的 `$QiNiuAK`，`$QiNiuSK` 在 travis 里环境变量里设置，这两个值用 sed 来替换。
 
-Pandoc 的参数，这也是我自己 [博客](http://tangzx.qiniudn.com) 的设置
+Pandoc 的参数：（这也是我自己 [博客](http://tangzx.qiniudn.com) 的设置）
 
 ```bash
 pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css \
@@ -64,4 +64,5 @@ pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css \
 
 ---
 
-感谢 [billryan](https://github.com/billryan)：[how did you sync to qiniu? · Issue #83 · billryan/algorithm-exercise](https://github.com/billryan/algorithm-exercise/issues/83)。
+十分感谢 [billryan](https://github.com/billryan)：[how did you sync to qiniu? ·
+Issue #83 · billryan/algorithm-exercise](https://github.com/billryan/algorithm-exercise/issues/83)。
