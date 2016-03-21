@@ -1,7 +1,9 @@
+sudo: required
+
 before_install:
   - cd ~
   - wget https://github.com/jgm/pandoc/releases/download/1.17/pandoc-1.17-1-amd64.deb
-  - dpkg -i pandoc*.deb
+  - sudo dpkg -i pandoc*.deb
   - pandoc -v
 
 script:
