@@ -6,7 +6,9 @@ Hacking Travis
 ==============
 
 <div class="tzx-fright">
+
 [![Build Status](https://travis-ci.org/district10/hacking-travis.svg?branch=master)](https://travis-ci.org/district10/hacking-travis)
+
 </div>
 
 **这个 repo 展示了如何用 travis 自动把本文件用 pandoc 转换，然后上载到自己的七牛云盘中。**
@@ -59,3 +61,7 @@ pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css \
         -f markdown+east_asian_line_breaks README.md \
         -o publish/index.html
 ```
+
+---
+
+感谢 [billryan](https://github.com/billryan)：[how did you sync to qiniu? · Issue #83 · billryan/algorithm-exercise](https://github.com/billryan/algorithm-exercise/issues/83)。
