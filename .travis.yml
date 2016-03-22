@@ -1,29 +1,30 @@
 sudo: required
+language: c
+before_install:
+  - openssl aes-256-cbc -K $encrypted_a7a3f2bffa2c_key -iv $encrypted_a7a3f2bffa2c_iv
+    -in id_rsa.enc -out ~\/.ssh/id_rsa -d
+  - cd ~
+  - wget https://github.com/jgm/pandoc/releases/download/1.17/pandoc-1.17-1-amd64.deb
+  - sudo dpkg -i pandoc*.deb
+script:
+  - wget http://devtools.qiniu.com/qiniu-devtools-linux_amd64-current.tar.gz
+  - tar xfz qiniu-devtools-linux_amd64-current.tar.gz
+  - git clone https://github.com/district10/hacking-travis.git
+  - cd hacking-travis
+  - mkdir publish
+  - pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css --highlight-style pygments
+    -f markdown+east_asian_line_breaks README.md -o publish/index.html
+  - sh gfw.sh
+  - cat conf.json.in | sed -e "s/QiNiuAK/$QiNiuAK/" | sed -e "s/QiNiuSK/$QiNiuSK/" >
+    conf.json
+  - "../qrsync conf.json"
+after_script:
+  - cd /tmp
+  - git clone https://${GH_TOKEN}@${GH_REF}
+  - cd hacking-travis
+  - date >> log.txt
+  - git add log.txt && git commit -m "write via token access" && git push
 env:
   global:
-  - GH_REF: github.com/district10/hacking-travis.git
-  - secure: EDRW+6zBKBHBf7xzoB0hBvcnvaecGWgM6KEAH8JV9FUqysShHKhqPEhnGvroXaVvqueECjcPldaFxcDG/8rI5hE3yvTXRV/s8O2pRuJ4jBKR1sG0bRvCMkhXFoVTfoAquN2s49+IMLJppEQYS5w23qIYqzXghcTY6DfQmqsGFFAtWg5PUxXpMUDTmsvr0HsuI27eNIEPR0hjnBIC8Q5bhBbG7dMPWmJ8nYrI9lq8gSrDe/Yfd9XqrlThzc+OexX6fL8qCGlVBzLMN0Q0z/Zn+aHZ0TBbh3KAhibR1wP1BON8SojOgjoVn0Lu3T3quPxpEiXXXxSKT7bv2iag3FqYZ9rOVRQ8eRPQiitxhaeNrTg0SuhOawLfukvDCFNB12GvB4j6yT2Kpfucg84QTuRbyP4wkdfVqP9gda3He08858eYFKmDPrHW6myFzZ3ERXFRilDfXIj8F0VM51afNII0CCUoxtf0nFu6aM5taZXNO6lQwNtUd/KTu6an7zOaOhnf1/k2glDbY0l4JU2HN3GqFsNzevfsVd9SZU+sKorAeCg7M9XJNHksLPiJOsHcTQ4PVEOOJQ0hjDmn6t/c0De72zc8EQNPdCWo98EJaBl2yvXvZZKp1yfsZjE5BRyK1KawI3sRcXa6RKpKN8zHy2zXnszQURvtm0Eg1V0NCoWJ23Q=
-before_install:
-- openssl aes-256-cbc -K $encrypted_a7a3f2bffa2c_key -iv $encrypted_a7a3f2bffa2c_iv
-  -in id_rsa.enc -out ~\/.ssh/id_rsa -d
-- cd ~
-- wget https://github.com/jgm/pandoc/releases/download/1.17/pandoc-1.17-1-amd64.deb
-- sudo dpkg -i pandoc*.deb
-script:
-- wget http://devtools.qiniu.com/qiniu-devtools-linux_amd64-current.tar.gz
-- tar xfz qiniu-devtools-linux_amd64-current.tar.gz
-- git clone https://github.com/district10/hacking-travis.git
-- cd hacking-travis
-- mkdir publish
-- pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css --highlight-style pygments
-  -f markdown+east_asian_line_breaks README.md -o publish/index.html
-- sh gfw.sh
-- cat conf.json.in | sed -e "s/QiNiuAK/$QiNiuAK/" | sed -e "s/QiNiuSK/$QiNiuSK/" >
-  conf.json
-- "../qrsync conf.json"
-after_script:
-- cd /tmp
-- git clone git@github.com:district10/hacking-travis.git
-- cd hacking-travis
-- date >> log.txt
-- git add log.txt && git commit -m "write via token access" && git push
+    - GH_REF: github.com/district10/hacking-travis.git
+    - secure: "EDRW+6zBKBHBf7xzoB0hBvcnvaecGWgM6KEAH8JV9FUqysShHKhqPEhnGvroXaVvqueECjcPldaFxcDG/8rI5hE3yvTXRV/s8O2pRuJ4jBKR1sG0bRvCMkhXFoVTfoAquN2s49+IMLJppEQYS5w23qIYqzXghcTY6DfQmqsGFFAtWg5PUxXpMUDTmsvr0HsuI27eNIEPR0hjnBIC8Q5bhBbG7dMPWmJ8nYrI9lq8gSrDe/Yfd9XqrlThzc+OexX6fL8qCGlVBzLMN0Q0z/Zn+aHZ0TBbh3KAhibR1wP1BON8SojOgjoVn0Lu3T3quPxpEiXXXxSKT7bv2iag3FqYZ9rOVRQ8eRPQiitxhaeNrTg0SuhOawLfukvDCFNB12GvB4j6yT2Kpfucg84QTuRbyP4wkdfVqP9gda3He08858eYFKmDPrHW6myFzZ3ERXFRilDfXIj8F0VM51afNII0CCUoxtf0nFu6aM5taZXNO6lQwNtUd/KTu6an7zOaOhnf1/k2glDbY0l4JU2HN3GqFsNzevfsVd9SZU+sKorAeCg7M9XJNHksLPiJOsHcTQ4PVEOOJQ0hjDmn6t/c0De72zc8EQNPdCWo98EJaBl2yvXvZZKp1yfsZjE5BRyK1KawI3sRcXa6RKpKN8zHy2zXnszQURvtm0Eg1V0NCoWJ23Q="
