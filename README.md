@@ -71,3 +71,13 @@ pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css \
 
 十分感谢 [billryan](https://github.com/billryan)：[how did you sync to qiniu? ·
 Issue #83 · billryan/algorithm-exercise](https://github.com/billryan/algorithm-exercise/issues/83)。
+
+---
+
+不能翻墙的时候帮我 fetch 点文件，也是不错的：
+
+| origin | backup |
+| :---: | :---: |
+| <https://github.com/jgm/pandoc/releases/download/1.17.0.1/pandoc-1.17.0.1-1-amd64.deb> | <http://tangzx.qiniudn.com/travis/pandoc-1.17.0.1-1-amd64.deb> |
+| <https://github.com/jgm/pandoc/releases/download/1.17.0.1/pandoc-1.17.0.1-windows.msi> | <http://tangzx.qiniudn.com/travis/pandoc-1.17.0.1-windows.msi> |
+| <https://github.com/jgm/pandoc/releases/download/1.17.0.1/pandoc-1.17.0.1-osx.pkg> | <http://tangzx.qiniudn.com/travis/pandoc-1.17.0.1-osx.pkg> |

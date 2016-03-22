@@ -12,5 +12,6 @@ script:
   - cd hacking-travis
   - mkdir publish
   - pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css --highlight-style pygments -f markdown+east_asian_line_breaks README.md -o publish/index.html
+  - sh gfw.sh
   - cat conf.json.in | sed -e "s/QiNiuAK/$QiNiuAK/" | sed -e "s/QiNiuSK/$QiNiuSK/" > conf.json
   - ../qrsync conf.json
