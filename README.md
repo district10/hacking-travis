@@ -7,11 +7,11 @@ Hacking Travis
 
 [![Build Status](https://travis-ci.org/district10/hacking-travis.svg?branch=master)](https://travis-ci.org/district10/hacking-travis)
 
-这是 pandoc 格式的 Markdown，GitHub 上显示得可能不好，请到
-<http://whudoc.qiniudn.com/travis/index.html> 查看效果。
-
 **这个 [repo](https://github.com/district10/hacking-travis) 展示了如何用 travis
 自动把本文件用 pandoc 转换，然后上载到自己的七牛云盘中。**
+
+这是 pandoc 格式的 Markdown，GitHub 上显示得可能不好，请到
+<http://whudoc.qiniudn.com/travis/index.html> 查看效果。
 
 首先新建一个 `conf.json.in`:
 
@@ -23,10 +23,11 @@ Hacking Travis
 }
 ```
 
-里面的 `QiNiuAK`，`QiNiuSK` 后面会被自动提换成自己的真实 key 值。
+里面的 `QiNiuAK`，`QiNiuSK` 后面会被自动提换成自己的真实 key 值，生成
+`conf.json` 文件，用于同步文件到七牛。
 
-其次，用 GitHub 登录 <https://travis-ci.org>，把自己的 repo 设置为需要 travis 处理。
-然后在 GitHub 里加上一个 `.travis.yml` 文件，放入下面的内容：
+然后，用 GitHub 登录 <https://travis-ci.org>，把自己的 repo 设置为需要 travis
+处理。然后在 GitHub 里加上一个 `.travis.yml` 文件，放入下面的内容：
 
 ```yml
 sudo: required
@@ -35,7 +36,6 @@ before_install:
   - cd ~
   - wget https://github.com/jgm/pandoc/releases/download/1.17/pandoc-1.17-1-amd64.deb
   - sudo dpkg -i pandoc*.deb
-  - pandoc -v
 
 script:
   - wget http://devtools.qiniu.com/qiniu-devtools-linux_amd64-current.tar.gz
@@ -43,7 +43,8 @@ script:
   - git clone https://github.com/district10/hacking-travis.git
   - cd hacking-travis
   - mkdir publish
-  - pandoc -f markdown+east_asian_line_breaks README.md -o publish/index.html
+  - pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css --highlight-style pygments -f markdown+east_asian_line_breaks README.md -o publish/index.html
+  - cat conf.json.in | sed -e "s/QiNiuAK/$QiNiuAK/" | sed -e "s/QiNiuSK/$QiNiuSK/" > conf.json
   - ../qrsync conf.json
 ```
 
@@ -64,7 +65,7 @@ pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css \
         -o publish/index.html
 ```
 
-然后到 trivis 去设置那两个环境变量。然后 push 到 GitHub 就可以了。
+然后到 trivis 去设置那两个环境变量。最后 push 到 GitHub 就可以了。
 
 ---
 
