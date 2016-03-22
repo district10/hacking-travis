@@ -6,12 +6,11 @@ before_install:
   - sudo dpkg -i pandoc*.deb
 
 script:
-  - git clone https://github.com/district10/hacking-travis.git
   - wget http://devtools.qiniu.com/qiniu-devtools-linux_amd64-current.tar.gz
   - tar xfz qiniu-devtools-linux_amd64-current.tar.gz
+  - git clone https://github.com/district10/hacking-travis.git
   - cd hacking-travis
   - mkdir publish
   - pandoc -S -s --ascii -c http://tangzx.qiniudn.com/main.css --highlight-style pygments -f markdown+east_asian_line_breaks README.md -o publish/index.html
-  - sed -i "s/QiNiuAK/$QiNiuAK/" conf.json
-  - sed -i "s/QiNiuSK/$QiNiuSK/" conf.json
+  - cat conf.json.in | sed -e "s/QiNiuAK/$QiNiuAK/" | sed -e "s/QiNiuSK/$QiNiuSK/" > conf.json
   - ../qrsync conf.json

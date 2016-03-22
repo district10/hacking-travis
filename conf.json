@@ -1,5 +1,0 @@
-{
-    "src": "publish",
-    "dest":  "qiniu:access_key=QiNiuAK&secret_key=QiNiuSK&bucket=whudoc&key_prefix=travis/",
-    "debug_level": 1
-}

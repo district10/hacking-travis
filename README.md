@@ -13,7 +13,7 @@ Hacking Travis
 **这个 [repo](https://github.com/district10/hacking-travis) 展示了如何用 travis
 自动把本文件用 pandoc 转换，然后上载到自己的七牛云盘中。**
 
-首先新建一个 `conf.json`:
+首先新建一个 `conf.json.in`:
 
 ```json
 {
@@ -38,23 +38,22 @@ before_install:
   - pandoc -v
 
 script:
-  - git clone https://github.com/district10/hacking-travis.git
   - wget http://devtools.qiniu.com/qiniu-devtools-linux_amd64-current.tar.gz
   - tar xfz qiniu-devtools-linux_amd64-current.tar.gz
+  - git clone https://github.com/district10/hacking-travis.git
   - cd hacking-travis
   - mkdir publish
   - pandoc -f markdown+east_asian_line_breaks README.md -o publish/index.html
-  - sed -i "s/QiNiuAK/$QiNiuAK/" conf.json
-  - sed -i "s/QiNiuSK/$QiNiuSK/" conf.json
   - ../qrsync conf.json
 ```
 
 说明：
 
-  - `pandoc` 要用 1.16+ 的版本，所以自己装。因为用了 [`east_asian_line_breaks`
+  - `pandoc`{.bash} 要用 1.16+ 的版本，所以自己装。因为用了 [`east_asian_line_breaks`
     扩展](https://github.com/jgm/pandoc/issues/2586)。
   - 同步到七牛，所以下载 `qiniu-devtools-linux_amd64-amd64-current.tar.gz`，里
-    面的 `$QiNiuAK`，`$QiNiuSK` 在 travis 里环境变量里设置，这两个值用 sed 来替换。
+    面的 `$QiNiuAK`{.bash}，`$QiNiuSK`{.bash} 在 travis
+    里环境变量里设置，这两个值用 `sed`{.bash} 来替换。
 
 Pandoc 的参数：（这也是我自己 [博客](http://tangzx.qiniudn.com) 的设置）
 
