@@ -6,6 +6,7 @@ before_install:
   - chmod 600 ~/.ssh/id_rsa
   - git config --global user.name "TANG ZhiXiong"
   - git config --global user.email "dvorak4tzx@qq.com"
+  - git config --global push.default simple
   - cd ~
   - wget https://github.com/jgm/pandoc/releases/download/1.17/pandoc-1.17-1-amd64.deb
   - sudo dpkg -i pandoc*.deb
@@ -23,7 +24,7 @@ script:
   - "../qrsync conf.json"
 after_script:
   - cd /tmp
-  - git clone https://${GH_TOKEN}@${GH_REF}
+  - git clone https://${GH_Token}@${GH_REF}
   - cd hacking-travis
   - date >> log.txt
   - git add log.txt && git commit -m "write via token access" && git push
